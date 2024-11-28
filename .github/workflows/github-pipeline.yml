@@ -40,7 +40,7 @@ jobs:
           clean: false
       - name: Step 1 - ejecucion
         run: |
-          apt update -y && apt install git -y
+          add-apt-repository -y ppa:git-core/ppa && apt update -y && apt install git -y
           git config --global init.defaultBranch main
           pwd
           ls -la
