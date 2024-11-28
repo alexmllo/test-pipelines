@@ -40,9 +40,10 @@ jobs:
           clean: false
       - name: Step 1 - ejecucion
         run: |
+          apt update -y && apt install git -y
+          git config --global init.defaultBranch main
           pwd
           ls -la
-          apt update -y && apt install git -y
           echo "Hello World" > test.txt
           git add test.txt
           git commit -m "Add test file"
