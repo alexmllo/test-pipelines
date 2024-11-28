@@ -15,32 +15,39 @@ on:
         options:
           - dev
           - pro
-      job_to_run:
-        description: "Job to run"
-        required: true
-        type: choice
-        default: 'all'
-        options:
-          - step1
-          - parallel
-          - step4
-          - all
+      # job_to_run:
+      #   description: "Job to run"
+      #   required: true
+      #   type: choice
+      #   default: 'all'
+      #   options:
+      #     - step1
+      #     - parallel
+      #     - step4
+      #     - all
 
 jobs:
   step1:
     name: step1
-    if: ${{ inputs.job_to_run == 'step1' || inputs.job_to_run == 'all' }}
+    # if: ${{ inputs.job_to_run == 'step1' || inputs.job_to_run == 'all' }}
     runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.TEST_PIPELINES }}
       - name: Step 1 - ejecucion
-        run: apt update -y && apt install git -y && cd $github_workspace && echo $github_workspace && pwd && echo Hello > test.txt && git add test.txt && git commmit -m "test" && git push
+        run: |
+          apt update -y && apt install git -y
+          echo "Hello World" > test.txt
+          git add test.txt
+          git commit -m "Add test file"
+          git push
   parallel:
     name: parallel
-    if: ${{ github.event.inputs.job_to_run == 'parallel' || github.event.inputs.job_to_run == 'all' }}
+    # if: ${{ github.event.inputs.job_to_run == 'parallel' || github.event.inputs.job_to_run == 'all' }}
     needs: step1
     runs-on: ubuntu-latest
     container:
@@ -55,7 +62,7 @@ jobs:
         run: echo "Ejecutando ${{ matrix.step }}"
   step4:
     name: step4
-    if: ${{ github.event.inputs.job_to_run == 'step4' || github.event.inputs.job_to_run == 'all' }}
+    # if: ${{ github.event.inputs.job_to_run == 'step4' || github.event.inputs.job_to_run == 'all' }}
     needs: [parallel]
     runs-on: ubuntu-latest
     container:
