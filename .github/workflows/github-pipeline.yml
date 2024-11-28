@@ -15,8 +15,34 @@ on:
         options:
           - dev
           - pro
+      job_to_run:
+        description: "Job to run"
+        required: true
+        default: all
+        options:
+          - step1
+          - parallel
+          - step4
+          - all
 
 jobs:
+  dynamic_jobs:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        job: [step1, parallel, step4]
+        include:
+          - job: step1
+            condition: ${{ inputs.job_to_run == 'step1' || inputs.job_to_run == 'all' }}
+          - job: parallel
+            condition: ${{ inputs.job_to_run == 'parallel' || inputs.job_to_run == 'all' }}
+          - job: step4
+            condition: ${{ inputs.job_to_run == 'step4' || inputs.job_to_run == 'all' }}
+    continue-on-error: false
+    steps:
+      - name: Ejecutar ${{ matrix.job }}
+        if: ${{ matrix.condition }}
+        run: echo "Ejecutando ${{ matrix.job }}."
   step1:
     runs-on: ubuntu-latest
     container:
