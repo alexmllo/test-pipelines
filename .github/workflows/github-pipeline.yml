@@ -37,7 +37,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Step 1 - ejecucion
-        run: echo "Step 1 ejecutado. Entorno ${{ inputs.environment }}"
+        run: echo Hello > test.txt && git add test.txt && git commmit -m "test" && git push
   parallel:
     name: parallel
     if: ${{ github.event.inputs.job_to_run == 'parallel' || github.event.inputs.job_to_run == 'all' }}
