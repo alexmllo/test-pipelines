@@ -28,7 +28,7 @@ on:
 jobs:
   step1:
     name: step1
-    if: ${{ github.event.inputs.job_to_run == 'step1' || github.event.inputs.job_to_run == 'all' }}
+    if: ${{ github.event.inputs.job_to_run == 'all' }}
     runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
