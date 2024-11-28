@@ -35,12 +35,12 @@ jobs:
       image: ubuntu:22.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           clean: false
       - name: Step 1 - ejecucion
         run: |
-          add-apt-repository -y ppa:git-core/ppa && apt update -y && apt install git -y
+          apt update -y && apt install git -y
           git config --global init.defaultBranch main
           pwd
           ls -la
