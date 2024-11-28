@@ -26,24 +26,8 @@ on:
           - all
 
 jobs:
-  dynamic_jobs:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        job: [step1, parallel, step4]
-        include:
-          - job: step1
-            condition: ${{ inputs.job_to_run == 'step1' || inputs.job_to_run == 'all' }}
-          - job: parallel
-            condition: ${{ inputs.job_to_run == 'parallel' || inputs.job_to_run == 'all' }}
-          - job: step4
-            condition: ${{ inputs.job_to_run == 'step4' || inputs.job_to_run == 'all' }}
-    continue-on-error: false
-    steps:
-      - name: Ejecutar ${{ matrix.job }}
-        if: ${{ matrix.condition }}
-        run: echo "Ejecutando ${{ matrix.job }}."
   step1:
+    if: ${{ github.event.inputs.job_to_run == 'step1' || github.event.inputs.job_to_run == 'all' }}
     runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
@@ -55,6 +39,7 @@ jobs:
         env:
           TEST-PIPELINES: ${{ secrets.TEST_PIPELINES }}
   parallel:
+    if: ${{ github.event.inputs.job_to_run == 'parallel' || github.event.inputs.job_to_run == 'all' }}
     needs: step1
     runs-on: ubuntu-latest
     container:
@@ -68,6 +53,7 @@ jobs:
       - name: Step 2 - ejecucion
         run: echo "Ejecutando ${{ matrix.step }}"
   step4:
+    if: ${{ github.event.inputs.job_to_run == 'step4' || github.event.inputs.job_to_run == 'all' }}
     needs: [parallel]
     runs-on: ubuntu-latest
     container:
