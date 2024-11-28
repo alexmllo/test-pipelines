@@ -17,8 +17,8 @@ on:
           - pro
       job_to_run:
         description: "Select job"
+        default: 'all'
         required: true
-        default: all
         options:
           - step1
           - parallel
