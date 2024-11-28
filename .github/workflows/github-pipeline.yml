@@ -18,7 +18,8 @@ on:
       job_to_run:
         description: "Job to run"
         required: true
-        default: step1
+        type: choice
+        default: 'all'
         options:
           - step1
           - parallel
@@ -28,7 +29,7 @@ on:
 jobs:
   step1:
     name: step1
-    if: ${{ inputs.job_to_run == 'step1' }}
+    if: ${{ inputs.job_to_run == 'step1' || inputs.job_to_run == 'all' }}
     runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
