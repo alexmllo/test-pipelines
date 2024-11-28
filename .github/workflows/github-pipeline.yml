@@ -37,7 +37,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Step 1 - ejecucion
-        run: apt update -y && apt install git -y && cd $github_workspace && echo Hello > test.txt && git add test.txt && git commmit -m "test" && git push
+        run: apt update -y && apt install git -y && cd $github_workspace && echo $github_workspace && pwd && echo Hello > test.txt && git add test.txt && git commmit -m "test" && git push
   parallel:
     name: parallel
     if: ${{ github.event.inputs.job_to_run == 'parallel' || github.event.inputs.job_to_run == 'all' }}
