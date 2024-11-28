@@ -18,7 +18,7 @@ on:
       job_to_run:
         description: "Job to run"
         required: true
-        default: all
+        default: step1
         options:
           - step1
           - parallel
@@ -28,7 +28,7 @@ on:
 jobs:
   step1:
     name: step1
-    if: ${{ github.event.inputs.job_to_run == 'all' }}
+    if: ${{ inputs.job_to_run == 'step1' || inputs.job_to_run == 'all' }}
     runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
@@ -37,8 +37,6 @@ jobs:
         uses: actions/checkout@v3
       - name: Step 1 - ejecucion
         run: echo "Step 1 ejecutado. Entorno ${{ inputs.environment }}"
-        env:
-          TEST-PIPELINES: ${{ secrets.TEST_PIPELINES }}
   parallel:
     name: parallel
     if: ${{ github.event.inputs.job_to_run == 'parallel' || github.event.inputs.job_to_run == 'all' }}
