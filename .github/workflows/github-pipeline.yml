@@ -33,6 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
+      options: --workdir /github/workspace
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -40,14 +41,14 @@ jobs:
           token: ${{ secrets.TEST_PIPELINES }}
       - name: Step 1 - ejecucion
         run: |
-          cd $GITHUB_WORKSPACE
+          # cd $GITHUB_WORKSPACE
           apt update -y && apt install git -y
           echo "Hello World" > test.txt
           git add test.txt
           git commit -m "Add test file"
           git push
-        env:
-          GITHUB_WORKSPACE: /github/workspace
+        # env:
+          # GITHUB_WORKSPACE: /github/workspace
   parallel:
     name: parallel
     # if: ${{ github.event.inputs.job_to_run == 'parallel' || github.event.inputs.job_to_run == 'all' }}
