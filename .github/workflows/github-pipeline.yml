@@ -18,6 +18,7 @@ on:
       job_to_run:
         description: "Select job"
         required: true
+        default: all
         options:
           - step1
           - parallel
