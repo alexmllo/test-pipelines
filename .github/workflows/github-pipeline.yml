@@ -27,6 +27,7 @@ on:
 
 jobs:
   step1:
+    name: step1
     if: ${{ github.event.inputs.job_to_run == 'step1' || github.event.inputs.job_to_run == 'all' }}
     runs-on: ubuntu-latest
     container:
@@ -39,6 +40,7 @@ jobs:
         env:
           TEST-PIPELINES: ${{ secrets.TEST_PIPELINES }}
   parallel:
+    name: parallel
     if: ${{ github.event.inputs.job_to_run == 'parallel' || github.event.inputs.job_to_run == 'all' }}
     needs: step1
     runs-on: ubuntu-latest
@@ -53,6 +55,7 @@ jobs:
       - name: Step 2 - ejecucion
         run: echo "Ejecutando ${{ matrix.step }}"
   step4:
+    name: step4
     if: ${{ github.event.inputs.job_to_run == 'step4' || github.event.inputs.job_to_run == 'all' }}
     needs: [parallel]
     runs-on: ubuntu-latest
