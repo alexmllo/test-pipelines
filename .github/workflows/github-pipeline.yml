@@ -15,12 +15,21 @@ on:
         options:
           - dev
           - pro
+      job_to_run:
+        description: "Select job"
+        required: true
+        options:
+          - step1
+          - parallel
+          - step4
+          - all
 
 jobs:
   step1:
     runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
+    if: ${{ github.event.inputs.job_to_run == 'step1' || github.event.inputs.job_to_run == 'all' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -36,6 +45,7 @@ jobs:
     strategy:
       matrix:
         step: [step2, step3]
+    if: ${{ github.event.inputs.job_to_run == 'parallel' || github.event.inputs.job_to_run == 'all' }}
     steps:
       - name: CHeckout code
         uses: actions/checkout@v3
@@ -46,6 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
+    if: ${{ github.event.inputs.job_to_run == 'step4' || github.event.inputs.job_to_run == 'all' }}
     steps:
       - name: Check entorno
         if: ${{ inputs.environment == 'production' }}
