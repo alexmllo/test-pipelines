@@ -1,0 +1,54 @@
+name: Test pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "*"
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Selecciona el entorno"
+        required: false
+        options:
+          - dev
+          - pro
+
+jobs:
+  step1:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Step 1 - ejecucion
+        run: echo "Step 1 ejecutado. Entorno ${{ inputs.environment }}"
+        env:
+          TEST-PIPELINES: ${{ secrets.TEST_PIPELINES }}
+  parallel:
+    needs: step1
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:22.04
+    strategy:
+      matrix:
+        step: [step2, step3]
+    steps:
+      - name: CHeckout code
+        uses: actions/checkout@v3
+      - name: Step 2 - ejecucion
+        run: echo "Ejecutando ${{ matrix.step }}"
+  step4:
+    needs: [parallel]
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:22.04
+    steps:
+      - name: Check entorno
+        if: ${{ inputs.environment == 'production' }}
+        run: echo "En entorno production"
+      - name: Finalizacion
+        run: echo "Pipeline completa despues de step2 y step3"
