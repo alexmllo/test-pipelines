@@ -28,7 +28,7 @@ on:
 jobs:
   step1:
     name: step1
-    if: ${{ inputs.job_to_run == 'step1' || inputs.job_to_run == 'all' }}
+    if: ${{ inputs.job_to_run == 'step1' }}
     runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
