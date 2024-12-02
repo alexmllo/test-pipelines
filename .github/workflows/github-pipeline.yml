@@ -34,14 +34,14 @@ jobs:
     container:
       image: ubuntu:22.04
     steps:
+      - name: Obtain Latest Git ONLY within container for checkout
+        run: |
+          apt-get update
+          apt-get install -y git
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          clean: false
       - name: Step 1 - ejecucion
         run: |
-          apt update -y && apt install git -y
-          git config --global init.defaultBranch main
           pwd
           ls -la
           echo "Hello World" > test.txt
