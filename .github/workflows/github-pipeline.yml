@@ -30,7 +30,7 @@ jobs:
   step1:
     name: step1
     # if: ${{ inputs.job_to_run == 'step1' || inputs.job_to_run == 'all' }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     container:
       image: ubuntu:22.04
     steps:
