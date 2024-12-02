@@ -30,7 +30,7 @@ jobs:
   step1:
     name: step1
     # if: ${{ inputs.job_to_run == 'step1' || inputs.job_to_run == 'all' }}
-    runs-on: self-hosted
+    runs-on: babyrunner
     container:
       image: ubuntu:22.04
     steps:
@@ -48,28 +48,28 @@ jobs:
           git add test.txt
           git commit -m "Add test file"
           git push
-  parallel:
-    name: parallel
-    # if: ${{ github.event.inputs.job_to_run == 'parallel' || github.event.inputs.job_to_run == 'all' }}
-    needs: step1
-    runs-on: ubuntu-latest
-    container:
-      image: ubuntu:22.04
-    strategy:
-      matrix:
-        step: [step2, step3]
-    steps:
-      - name: CHeckout code
-        uses: actions/checkout@v3
-      - name: Step 2 - ejecucion
-        run: echo "Ejecutando ${{ matrix.step }}"
+  # parallel:
+  #   name: parallel
+  #   # if: ${{ github.event.inputs.job_to_run == 'parallel' || github.event.inputs.job_to_run == 'all' }}
+  #   needs: step1
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: ubuntu:22.04
+  #   strategy:
+  #     matrix:
+  #       step: [step2, step3]
+  #   steps:
+  #     - name: CHeckout code
+  #       uses: actions/checkout@v3
+  #     - name: Step 2 - ejecucion
+  #       run: echo "Ejecutando ${{ matrix.step }}"
   step4:
     name: step4
     # if: ${{ github.event.inputs.job_to_run == 'step4' || github.event.inputs.job_to_run == 'all' }}
-    needs: [parallel]
-    runs-on: ubuntu-latest
-    container:
-      image: ubuntu:22.04
+    # needs: step1
+    runs-on: babyrunner
+    # container:
+    #   image: ubuntu:22.04
     steps:
       - name: Check entorno
         if: ${{ inputs.environment == 'production' }}
