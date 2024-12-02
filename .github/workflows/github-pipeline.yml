@@ -36,6 +36,7 @@ jobs:
     steps:
       - name: Obtain Latest Git ONLY within container for checkout
         run: |
+          slepp(120)
           apt-get update
           apt-get install -y git
       - name: Checkout code
@@ -68,11 +69,13 @@ jobs:
     # if: ${{ github.event.inputs.job_to_run == 'step4' || github.event.inputs.job_to_run == 'all' }}
     # needs: step1
     runs-on: babyrunner
-    # container:
-    #   image: ubuntu:22.04
+    container:
+      image: ubuntu:22.04
     steps:
       - name: Check entorno
         if: ${{ inputs.environment == 'production' }}
         run: echo "En entorno production"
       - name: Finalizacion
-        run: echo "Pipeline completa despues de step2 y step3"
+        run: |
+          sleep(120)
+          echo "Pipeline completa despues de step2 y step3"
