@@ -36,7 +36,7 @@ jobs:
     steps:
       - name: Obtain Latest Git ONLY within container for checkout
         run: |
-          sleep(120)
+          sleep 120
           apt-get update
           apt-get install -y git
       - name: Checkout code
@@ -77,5 +77,5 @@ jobs:
         run: echo "En entorno production"
       - name: Finalizacion
         run: |
-          sleep(120)
+          sleep 120
           echo "Pipeline completa despues de step2 y step3"
