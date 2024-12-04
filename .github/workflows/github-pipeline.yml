@@ -12,31 +12,33 @@ on:
       environment:
         description: "Selecciona el entorno"
         required: false
+        type: choice
+        default: 'dev'
         options:
           - dev
           - pro
-      # job_to_run:
-      #   description: "Job to run"
-      #   required: true
-      #   type: choice
-      #   default: 'all'
-      #   options:
-      #     - step1
-      #     - parallel
-      #     - step4
-      #     - all
+      job_to_run:
+        description: "Job to run"
+        required: true
+        type: choice
+        default: 'step1'
+        options:
+          - step1
+          - step2
+          - step3
 
 jobs:
   step1:
     name: step1
-    # if: ${{ inputs.job_to_run == 'step1' || inputs.job_to_run == 'all' }}
-    runs-on: babyrunner
+    if: ${{ inputs.job_to_run == 'step1' }}
+    # runs-on: babyrunner
+    runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
     steps:
       - name: Obtain Latest Git ONLY within container for checkout
         run: |
-          sleep 120
+          sleep 3
           apt-get update
           apt-get install -y git
       - name: Checkout code
@@ -45,37 +47,34 @@ jobs:
         run: |
           pwd
           ls -la
-          echo "Hello World" > test.txt
-          git add test.txt
-          git commit -m "Add test file"
-          git push
-  # parallel:
-  #   name: parallel
-  #   # if: ${{ github.event.inputs.job_to_run == 'parallel' || github.event.inputs.job_to_run == 'all' }}
-  #   needs: step1
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: ubuntu:22.04
-  #   strategy:
-  #     matrix:
-  #       step: [step2, step3]
-  #   steps:
-  #     - name: CHeckout code
-  #       uses: actions/checkout@v3
-  #     - name: Step 2 - ejecucion
-  #       run: echo "Ejecutando ${{ matrix.step }}"
-  step4:
-    name: step4
-    # if: ${{ github.event.inputs.job_to_run == 'step4' || github.event.inputs.job_to_run == 'all' }}
+          #echo "Hello World" > test.txt
+          #git add test.txt
+          #git commit -m "Add test file"
+          #git push
+  step2:
+    name: step2
+    if: ${{ inputs.job_to_run == 'step2' }}
+    needs: step1
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Step 2 - ejecucion
+        run: echo "Ejecutando step2"
+  step3:
+    name: step3
+    if: ${{ inputs.job_to_run == 'step3' }}
     # needs: step1
-    runs-on: babyrunner
+    runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
     steps:
       - name: Check entorno
-        if: ${{ inputs.environment == 'production' }}
+        if: ${{ inputs.environment == 'pro' }}
         run: echo "En entorno production"
       - name: Finalizacion
         run: |
-          sleep 120
+          sleep 3
           echo "Pipeline completa despues de step2 y step3"
