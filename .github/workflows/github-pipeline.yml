@@ -27,6 +27,9 @@ on:
           - job2
           - job3
 
+permissions:
+  contents: write
+
 jobs:
   job1:
     name: job1
