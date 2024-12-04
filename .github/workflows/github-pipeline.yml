@@ -32,8 +32,8 @@ jobs:
     name: job1
     # runs-on: babyrunner
     runs-on: ubuntu-latest
-    container:
-      image: ubuntu:22.04
+    #container:
+      #image: ubuntu:22.04
     steps:
       - name: Obtain Latest Git ONLY within container for checkout
         run: |
