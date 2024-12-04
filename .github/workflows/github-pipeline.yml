@@ -47,13 +47,13 @@ jobs:
         run: |
           pwd
           ls -la
-          #echo "Hello World" > test.txt
-          #git add test.txt
-          #git commit -m "Add test file"
-          #git push
+          echo "Hello World" > test.txt
+          git add test.txt
+          git commit -m "Add test file"
+          git push
   job2:
     name: job2
-    if: ${{ github.event.inputs.job-to-run == 'job2' }}
+    if: ${{ github.event_name == 'pull_request' }}
     needs: job1
     runs-on: ubuntu-latest
     container:
@@ -65,8 +65,8 @@ jobs:
         run: echo "Ejecutando step2"
   job3:
     name: job3
-    #if: ${{ github.event.inputs.job-to-run == 'job3' }}
-    # needs: job11
+    if: ${{ github.event_name == 'push' }}
+    needs: job11
     runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
