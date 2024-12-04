@@ -72,7 +72,7 @@ jobs:
       image: ubuntu:22.04
     steps:
       - name: Check entorno
-        if: ${{ github.event_name == 'push' -o .egithub.event.inputs.environment == 'pro' }}
+        if: ${{ github.event_name == 'push' || github.event.inputs.environment == 'pro' }}
         run: echo "En entorno production"
       - name: Finalizacion
         run: |
