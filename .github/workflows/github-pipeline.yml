@@ -81,3 +81,16 @@ jobs:
         run: |
           sleep 3
           echo "Pipeline completa despues de step2 y step3"
+  call-reusable-workflow-test:
+    uses: alexmllo/test-reusable-action/.github/workflows/workflow-1.yml@726cd2a093b6028b5646af39df8c1d867d2e8553
+    with:
+      input-var: "variable 1"
+
+  
+  # call-reusable-workflow-test:
+  #   strategy:
+  #     matrix:
+  #       target: [dev, stage, prod]
+  #   uses: alexmllo/test-reusable-action/.github/workflows/workflow-1.yml@726cd2a093b6028b5646af39df8c1d867d2e8553
+  #   with:
+  #     target: ${{ matrix.target }}
