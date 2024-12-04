@@ -28,7 +28,7 @@ on:
           - job3
 
 jobs:
-  job11:
+  job1:
     name: job1
     if: ${{ github.event.inputs.job-to-run == 'job1' }}
     # runs-on: babyrunner
@@ -52,7 +52,7 @@ jobs:
           #git commit -m "Add test file"
           #git push
   job2:
-    name: job22
+    name: job2
     if: ${{ github.event.inputs.job-to-run == 'job2' }}
     needs: job1
     runs-on: ubuntu-latest
