@@ -17,11 +17,11 @@ on:
         options:
           - dev
           - pro
-      job_to_run:
+      job-to-run:
         description: "Job to run"
-        required: true
+        required: false
         type: choice
-        default: 'step1'
+        default: 'step3'
         options:
           - step1
           - step2
@@ -30,7 +30,7 @@ on:
 jobs:
   step1:
     name: step1
-    if: ${{ inputs.job_to_run == 'step1' }}
+    if: ${{ github.event.inputs.job-to-run == 'step1' }}
     # runs-on: babyrunner
     runs-on: ubuntu-latest
     container:
@@ -53,7 +53,7 @@ jobs:
           #git push
   step2:
     name: step2
-    if: ${{ inputs.job_to_run == 'step2' }}
+    if: ${{ github.event.inputs.job-to-run == 'step2' }}
     needs: step1
     runs-on: ubuntu-latest
     container:
@@ -65,7 +65,7 @@ jobs:
         run: echo "Ejecutando step2"
   step3:
     name: step3
-    if: ${{ inputs.job_to_run == 'step3' }}
+    if: ${{ github.event.inputs.job-to-run == 'step3' }}
     # needs: step1
     runs-on: ubuntu-latest
     container:
