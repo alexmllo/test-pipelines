@@ -47,6 +47,7 @@ jobs:
           pwd
           ls -la
           echo "Hello World" > test.txt
+          git config --global --add safe.directory /__w/test-pipelines/test-pipelines
           git add test.txt
           git commit -m "Add test file"
           git push
