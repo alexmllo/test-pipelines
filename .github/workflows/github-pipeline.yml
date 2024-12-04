@@ -51,7 +51,7 @@ jobs:
           git config --global user.email "alex.mitjans@ithinkupc.com"
           echo "Hello World" > test2.txt
           git config --global --add safe.directory /__w/test-pipelines/test-pipelines
-          git add test.txt
+          git add test2.txt
           git commit -m "Add test file"
           git push
   job2:
