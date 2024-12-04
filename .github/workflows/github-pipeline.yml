@@ -13,7 +13,7 @@ on:
         description: "Selecciona el entorno"
         required: false
         type: choice
-        default: 'dev'
+        default: 'pro'
         options:
           - dev
           - pro
@@ -21,16 +21,16 @@ on:
         description: "Job to run"
         required: false
         type: choice
-        default: 'step3'
+        default: 'job3'
         options:
-          - step1
-          - step2
-          - step3
+          - job1
+          - job2
+          - job3
 
 jobs:
-  step1:
-    name: step1
-    if: ${{ github.event.inputs.job-to-run == 'step1' }}
+  job11:
+    name: job1
+    if: ${{ github.event.inputs.job-to-run == 'job1' }}
     # runs-on: babyrunner
     runs-on: ubuntu-latest
     container:
@@ -51,10 +51,10 @@ jobs:
           #git add test.txt
           #git commit -m "Add test file"
           #git push
-  step2:
-    name: step2
-    if: ${{ github.event.inputs.job-to-run == 'step2' }}
-    needs: step1
+  job2:
+    name: job22
+    if: ${{ github.event.inputs.job-to-run == 'job2' }}
+    needs: job1
     runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
@@ -63,10 +63,10 @@ jobs:
         uses: actions/checkout@v3
       - name: Step 2 - ejecucion
         run: echo "Ejecutando step2"
-  step3:
-    name: step3
-    if: ${{ github.event.inputs.job-to-run == 'step3' }}
-    # needs: step1
+  job3:
+    name: job3
+    #if: ${{ github.event.inputs.job-to-run == 'job3' }}
+    # needs: job11
     runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
