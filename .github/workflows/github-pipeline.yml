@@ -47,15 +47,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.TEST_PIPELINES }}
-      - name: Step 1 - ejecucion
-        run: |
-          git config --global user.name "alexmllo"
-          git config --global user.email "alex.mitjans@ithinkupc.com"
-          echo "Hello World" > test2.txt
-          git config --global --add safe.directory /__w/test-pipelines/test-pipelines
-          git add test2.txt
-          git commit -m "Add test file"
-          git push
+      - name: Wait
+        run: sleep 120
+      # - name: Push to github
+      #   run: |
+      #     git config --global user.name "alexmllo"
+      #     git config --global user.email "alex.mitjans@ithinkupc.com"
+      #     echo "Hello World" > test2.txt
+      #     git config --global --add safe.directory /__w/test-pipelines/test-pipelines
+      #     git add test2.txt
+      #     git commit -m "Add test file"
+      #     git push
   job2:
     name: job2
     if: ${{ github.event_name == 'pull_request' }}
