@@ -49,8 +49,6 @@ jobs:
           token: ${{ secrets.TEST_PIPELINES }}
       - name: Step 1 - ejecucion
         run: |
-          #git config --global user.name "alexmllo"
-          #git config --global user.email "alex.mitjans@ithinkupc.com"
           echo "Hello" > test2.txt
           git config --global --add safe.directory /__w/test-pipelines/test-pipelines
           git add test2.txt
