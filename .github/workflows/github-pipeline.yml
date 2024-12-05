@@ -48,7 +48,7 @@ jobs:
         with:
           token: ${{ secrets.TEST_PIPELINES }}
       - name: Wait
-        run: sleep 120
+        run: sleep 60
       # - name: Push to github
       #   run: |
       #     git config --global user.name "alexmllo"
