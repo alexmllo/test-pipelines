@@ -33,7 +33,7 @@ permissions:
 jobs:
   job1:
     name: job1
-    runs-on: bbrunner-01118017c287
+    runs-on: self-hosted
     #runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
