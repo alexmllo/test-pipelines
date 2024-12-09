@@ -33,8 +33,8 @@ permissions:
 jobs:
   job1:
     name: job1
-    runs-on: self-hosted
-    #runs-on: ubuntu-latest
+    #runs-on: self-hosted
+    runs-on: ubuntu-latest
     container:
       image: ubuntu:22.04
     steps:
