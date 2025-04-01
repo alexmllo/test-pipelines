@@ -1,0 +1,40 @@
+name: Test Sequential Jobs Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build
+        run: |
+          echo "Building project..."
+          sleep 10
+          echo "Build completed!"
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build  # Se ejecuta después de build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run Tests
+        run: |
+          echo "Running tests..."
+          sleep 15
+          echo "Tests completed!"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test  # Se ejecuta después de test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Deploy
+        run: |
+          echo "Deploying application..."
+          sleep 5
+          echo "Deployment successful!"
