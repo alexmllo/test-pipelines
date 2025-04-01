@@ -1,0 +1,44 @@
+name: Matrix Jobs Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  first-matrix:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        job-name: [build, test, lint]  # Primera matriz con 3 jobs
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run ${{ matrix.job-name }}
+        run: |
+          echo "Running ${{ matrix.job-name }}..."
+          sleep 10
+          echo "${{ matrix.job-name }} completed!"
+
+  intermediate-job:
+    runs-on: ubuntu-latest
+    needs: first-matrix  # Se ejecuta después de que termine la primera matriz
+    steps:
+      - name: Perform Intermediate Task
+        run: |
+          echo "Executing intermediate task..."
+          sleep 5
+          echo "Intermediate task completed!"
+
+  second-matrix:
+    runs-on: ubuntu-latest
+    needs: intermediate-job  # Se ejecuta después del job intermedio
+    strategy:
+      matrix:
+        job-name: [deploy, notify, cleanup]  # Segunda matriz con 3 jobs
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run ${{ matrix.job-name }}
+        run: |
+          echo "Running ${{ matrix.job-name }}..."
+          sleep 10
+          echo "${{ matrix.job-name }} completed!"
